@@ -2,82 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Programming Languages Module</title>
+<title>Programming Languages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+* { box-sizing: border-box; }
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f7fa;
     margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: white;
 }
 
 header {
-    background: #1f2937;
-    color: white;
-    padding: 20px;
     text-align: center;
+    padding: 40px 20px;
+    background: rgba(15,23,42,0.7);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
 }
 
 .container {
-    padding: 30px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+}
+
+.card-link {
+    text-decoration: none;
+    color: white;
 }
 
 .card {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    background: linear-gradient(145deg, #111827, #0b1220);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+    transition: all 0.35s ease;
+    cursor: pointer;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.35s;
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.9),
+        0 0 20px rgba(59,130,246,0.25);
+}
+
+.card:hover::after { opacity: 1; }
+
+.card img {
+    width: 250px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 14px;
+    transition: transform 0.4s ease;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
+}
+
+.card:hover img {
+    transform: scale(1.12) rotate(3deg);
 }
 
 .card h3 {
-    margin-top: 0;
-}
-
-.level {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    background: #e5e7eb;
-}
-
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.btn-primary {
-    background: #2563eb;
-    color: white;
-}
-
-.btn-secondary {
-    background: #10b981;
-    color: white;
-}
-
-ul {
-    padding-left: 18px;
+    margin: 10px 0 0;
+    font-size: 18px;
 }
 
 footer {
     text-align: center;
-    padding: 15px;
-    background: #111827;
-    color: white;
+    padding: 20px;
     margin-top: 40px;
+    background: #020617;
+    opacity: 0.7;
 }
 </style>
 </head>
@@ -85,109 +103,60 @@ footer {
 <body>
 
 <header>
-    <h1>Programming Language Module</h1>
-    <p>Interview Preparation Content</p>
+    <h1>Programming Languages</h1>
+    <p>Select a language to continue</p>
 </header>
 
 <div class="container">
-
 <div class="grid">
 
-<!-- Python -->
+<a href="python.html" class="card-link">
 <div class="card">
+    <img src="image/python.jpg">
     <h3>Python</h3>
-    <span class="level">Beginner → Advanced</span>
-    <ul>
-        <li>Core Python Concepts</li>
-        <li>OOP in Python</li>
-        <li>Django Basics</li>
-        <li>Data Structures</li>
-        <li>Interview Questions</li>
-    </ul>
-    <a href="#" class="btn btn-primary">View Content</a>
-    <a href="#" class="btn btn-secondary">Take Quiz</a>
 </div>
+</a>
 
-<!-- Java -->
+<a href="java.html" class="card-link">
 <div class="card">
+    <img src="image/java.png">
     <h3>Java</h3>
-    <span class="level">Intermediate</span>
-    <ul>
-        <li>Core Java</li>
-        <li>OOP Concepts</li>
-        <li>Collections</li>
-        <li>Exception Handling</li>
-        <li>Java Interview Q&A</li>
-    </ul>
-    <a href="#" class="btn btn-primary">View Content</a>
-    <a href="#" class="btn btn-secondary">Take Quiz</a>
 </div>
+</a>
 
-<!-- C++ -->
+<a href="cpp.html" class="card-link">
 <div class="card">
+    <img src="image/cpp.png">
     <h3>C++</h3>
-    <span class="level">Core + DSA</span>
-    <ul>
-        <li>Basics & Syntax</li>
-        <li>Pointers</li>
-        <li>STL</li>
-        <li>OOP</li>
-        <li>DSA Interview Problems</li>
-    </ul>
-    <a href="#" class="btn btn-primary">View Content</a>
-    <a href="#" class="btn btn-secondary">Take Quiz</a>
 </div>
+</a>
 
-<!-- JavaScript -->
+<a href="javascript.html" class="card-link">
 <div class="card">
+    <img src="image/javascript.png">
     <h3>JavaScript</h3>
-    <span class="level">Frontend + Logic</span>
-    <ul>
-        <li>JS Fundamentals</li>
-        <li>Closures & Promises</li>
-        <li>Async JS</li>
-        <li>DOM</li>
-        <li>JS Interview Q&A</li>
-    </ul>
-    <a href="#" class="btn btn-primary">View Content</a>
-    <a href="#" class="btn btn-secondary">Take Quiz</a>
 </div>
+</a>
 
-<!-- SQL -->
+<a href="sql.html" class="card-link">
 <div class="card">
+    <img src="image/sql.jpg">
     <h3>SQL</h3>
-    <span class="level">Database</span>
-    <ul>
-        <li>Queries</li>
-        <li>Joins</li>
-        <li>Indexes</li>
-        <li>Normalization</li>
-        <li>SQL Interview Questions</li>
-    </ul>
-    <a href="#" class="btn btn-primary">View Content</a>
-    <a href="#" class="btn btn-secondary">Take Quiz</a>
 </div>
+</a>
 
-<!-- Data Structures -->
+<a href="dsa.html" class="card-link">
 <div class="card">
+    <img src="image/dsa.png">
     <h3>Data Structures</h3>
-    <span class="level">Interview Core</span>
-    <ul>
-        <li>Arrays & Linked List</li>
-        <li>Stacks & Queues</li>
-        <li>Trees & Graphs</li>
-        <li>Sorting & Searching</li>
-        <li>Coding Practice</li>
-    </ul>
-    <a href="#" class="btn btn-primary">View Content</a>
-    <a href="#" class="btn btn-secondary">Take Quiz</a>
 </div>
+</a>
 
 </div>
 </div>
 
 <footer>
-© Interview Prep Platform — Programming Module
+© Interview Prep Platform
 </footer>
 
 </body>
