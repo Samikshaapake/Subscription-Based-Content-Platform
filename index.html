@@ -1,247 +1,323 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>PrepEdge | Interview Preparation Platform</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>PrepEdge | MCA Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Basic Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-<style>
-* { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #020617);
+      color: white;
+      overflow-x: hidden;
+    }
 
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: white;
-}
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      transition: 0.3s;
+    }
+    .navbar.scrolled {
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      background: rgba(15, 23, 42, 0.95);
+    }
+    .navbar .brand {
+      font-size: 26px;
+      font-weight: bold;
+      color: #3b82f6;
+      letter-spacing: 1px;
+    }
+    .nav-links a {
+      margin-left: 25px;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-links a:hover { color: #3b82f6; }
 
-/* ===================== Navbar ===================== */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background: rgba(15,23,42,0.7);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
-}
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 120px 20px 80px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero h1 { font-size: 42px; margin-bottom: 20px; animation: fadeInUp 1s ease forwards; opacity: 0; }
+    .hero p { font-size: 18px; margin-bottom: 30px; animation: fadeInUp 1.2s ease forwards; opacity: 0; }
+    .hero .btn {
+      background: linear-gradient(90deg, #3b82f6, #06b6d4);
+      color: white;
+      padding: 14px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .hero .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+    }
+    .hero .btn::after {
+      content: " ↓";
+      margin-left: 5px;
+      font-size: 18px;
+    }
 
-.navbar .brand {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #38bdf8;
-    text-decoration: none;
-}
+    /* Content Domain Section */
+    .content-domain { padding: 80px 20px; background: #0f172a; }
+    .content-container {
+      display: flex;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .content-image {
+      flex: 1;
+      min-width: 300px;
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.8s ease;
+    }
+    .content-image img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      transition: transform 0.5s, box-shadow 0.5s;
+    }
+    .content-image img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 15px 40px rgba(59,130,246,0.5);
+    }
+    .content-info {
+      flex: 1;
+      min-width: 300px;
+      background: rgba(15,23,42,0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 30px;
+      color: white;
+      box-shadow: 0 10px 30px rgba(59,130,246,0.4);
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.8s ease;
+    }
+    .content-container.show .content-image,
+    .content-container.show .content-info { opacity: 1; transform: translateX(0); }
+    .content-info h2 { font-size: 28px; margin-bottom: 20px; color: #3b82f6; }
+    .content-info p { font-size: 18px; margin-bottom: 20px; line-height: 1.6; }
+    .content-info a {
+      display: inline-block;
+      background: linear-gradient(90deg,#3b82f6,#06b6d4);
+      padding: 12px 25px;
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+    .content-info a:hover { transform: scale(1.05); }
+    .content-info a::after { content:" ↓"; margin-left:5px; }
 
-.navbar .nav-links {
-    display: flex;
-    gap: 16px;
-}
+    /* Grid Cards */
+    .container { padding: 60px 20px; max-width: 1200px; margin: auto; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .card-link { text-decoration: none; color: white; }
+    .card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: left;
+      position: relative;
+      transition: all 0.35s ease, transform 0.3s;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      min-height: 120px;
+    }
+    .card img {
+      width: 150px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+    .card h3 { font-size: 20px; line-height: 1.4; margin-bottom: 5px; }
+    .card p { font-size: 14px; color: #cbd5e1; }
+    .card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 15px 35px rgba(59,130,246,0.4); }
+    .card.show-card { opacity: 1; transform: translateY(0); transition: all 0.6s ease; }
 
-.navbar .nav-links a {
-    text-decoration: none;
-    color: white;
-    padding: 8px 18px;
-    border-radius: 6px;
-    font-weight: 500;
-    background: linear-gradient(to right, #06b6d4, #3b82f6);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(6,182,212,0.3);
-}
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 25px 20px;
+      margin-top: 40px;
+      background: #020617;
+      opacity: 0.9;
+    }
+    .footer-links a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #3b82f6;
+      font-weight: 500;
+    }
 
-.navbar .nav-links a:hover {
-    background: linear-gradient(to right, #3b82f6, #06b6d4);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(59,130,246,0.5);
-}
-
-/* ===================== Hero Section ===================== */
-.hero {
-    text-align: center;
-    padding: 80px 20px 40px;
-}
-
-.hero h1 {
-    font-size: 2.5rem;
-    background: linear-gradient(to right, #38bdf8, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    color: #cbd5e1;
-    margin-bottom: 30px;
-}
-
-.hero .btn {
-    display: inline-block;
-    background: linear-gradient(to right, #06b6d4, #3b82f6);
-    color: white;
-    padding: 12px 28px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.hero .btn:hover {
-    background: linear-gradient(to right, #3b82f6, #06b6d4);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(59,130,246,0.4);
-}
-
-/* ===================== Card Grid ===================== */
-.container {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 28px;
-}
-
-.card-link {
-    text-decoration: none;
-    color: white;
-}
-
-.card {
-    background: linear-gradient(145deg, #111827, #0b1220);
-    border-radius: 16px;
-    padding: 30px 20px;
-    text-align: center;
-    position: relative;
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.6),
-        inset 0 0 0 1px rgba(255,255,255,0.05);
-    transition: all 0.35s ease;
-    cursor: pointer;
-}
-
-.card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    opacity: 0;
-    transition: opacity 0.35s;
-    box-shadow: 0 0 25px rgba(59,130,246,0.5);
-}
-
-.card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow:
-        0 20px 40px rgba(0,0,0,0.9),
-        0 0 20px rgba(59,130,246,0.25);
-}
-
-.card:hover::after { opacity: 1; }
-
-.card img {
-    width: 150px;
-    height: 90px;
-    object-fit: contain;
-    margin-bottom: 14px;
-    transition: transform 0.4s ease;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
-}
-
-.card:hover img {
-    transform: scale(1.12) rotate(3deg);
-}
-
-.card h3 {
-    margin: 10px 0 0;
-    font-size: 18px;
-}
-
-
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background: #020617;
-    opacity: 0.7;
-}
-</style>
+    /* Animations */
+    @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+  </style>
 </head>
-
 <body>
 
-<!-- Navbar -->
-<div class="navbar">
-    <a href="#" class="brand">PrepEdge</a>
+  <!-- Navbar -->
+  <div class="navbar" id="navbar">
+    <div class="brand">PrepEdge</div>
     <div class="nav-links">
-        <a href="signup.html">Signup</a>
+      <a href="signup.html">Signup</a>
+      <a href="login.html">Login</a>
     </div>
-</div>
+  </div>
 
-<!-- Hero Section -->
-<section class="hero">
+  <!-- Hero Section -->
+  <section class="hero">
     <h1>Practice, Learn, and Crack Interviews</h1>
     <p>Browse curated categories, attempt mock tests, and get AI-powered insights.</p>
-    <a href="signup.html" class="btn">Get Started</a>
-</section>
+    <a href="#contentDomain" class="btn">Explore Now</a>
+  </section>
 
-<!-- Browse by Category -->
-<section class="container my-5">
-    <div class="category-section text-center">
-        <h4 class="fw-bold mb-4">Browse by Category</h4>
-
-        <div class="row g-4 justify-content-center">
-
-            <div class="col-md-4">
-                <div class="category-card">
-                    💻 Programming Languages
-                </div>
-            </div>
-        </a>
-
-        <a href="company.html" class="card-link">
-            <div class="card">
-                <h3>🏢 Company Info & Blogs</h3>
-            </div>
-        </a>
-
-        <a href="expert.html" class="card-link">
-            <div class="card">
-                <h3>🎙 Expert Talks / Podcast</h3>
-            </div>
-        </a>
-
-        <a href="softskills.html" class="card-link">
-            <div class="card">
-                <h3>🗣 Communication & Soft Skills</h3>
-            </div>
-        </a>
-
-        <a href="questions.html" class="card-link">
-            <div class="card">
-                <h3>📝 Questions / Aptitude / MCQ Tech</h3>
-            </div>
-        </a>
-
-        <a href="ai.html" class="card-link">
-            <div class="card">
-                <h3>🤖 AI Recommendations</h3>
-            </div>
-        </a>
-
+  <!-- Content Domain Section -->
+  <section class="content-domain">
+    <div class="content-container" id="contentDomain">
+      <div class="content-image">
+        <img src="image/content_domain.png" alt="Content Domain" loading="lazy" />
+      </div>
+      <div class="content-info">
+        <h2>Explore Content Domains</h2>
+        <p>Dive into curated content domains like Programming, Soft Skills, AI Insights, Company Blogs, and more. Each domain has structured lessons, practice questions, and expert guidance to help you excel.</p>
+        <a href="#categories" class="btn">Explore Now</a>
+      </div>
     </div>
-</div>
+  </section>
 
-<!-- Footer -->
-<footer>
-    <div style="margin-bottom: 10px;">© 2026 PrepEdge | MCA Final Year Project</div>
+  <!-- Grid Cards Section -->
+  <div class="container" id="categories">
+    <div class="grid">
+      <a href="programming.html" class="card-link">
+        <div class="card">
+          <img src="image/programming.jpg" alt="Programming" />
+          <div>
+            <h3>💻 Programming Languages</h3>
+            <p>Learn and practice Python, Java, C++, and more with examples and challenges.</p>
+          </div>
+        </div>
+      </a>
+      <a href="company.html" class="card-link">
+        <div class="card">
+          <img src="image/company.png" alt="Company" />
+          <div>
+            <h3>🏢 Company Info & Blogs</h3>
+            <p>Explore company insights, blogs, and interview experiences.</p>
+          </div>
+        </div>
+      </a>
+      <a href="expert.html" class="card-link">
+        <div class="card">
+          <img src="image/expert_talks.jpg" alt="Expert" />
+          <div>
+            <h3>🎙 Expert Talks / Podcast</h3>
+            <p>Gain insights from industry experts via talks and podcasts.</p>
+          </div>
+        </div>
+      </a>
+      <a href="softskills.html" class="card-link">
+        <div class="card">
+          <img src="image/comm.jpg" alt="Soft Skills" />
+          <div>
+            <h3>🗣 Communication & Soft Skills</h3>
+            <p>Improve your communication, presentation, and interpersonal skills.</p>
+          </div>
+        </div>
+      </a>
+      <a href="questions.html" class="card-link">
+        <div class="card">
+          <img src="image/question.jpg" alt="Questions" />
+          <div>
+            <h3>📝 Questions / Aptitude / MCQ Tech</h3>
+            <p>Practice aptitude, technical MCQs, and previous interview questions.</p>
+          </div>
+        </div>
+      </a>
+      <a href="ai.html" class="card-link">
+        <div class="card">
+          <img src="image/ai.png" alt="AI" />
+          <div>
+            <h3>🤖 AI Recommendations</h3>
+            <p>Get personalized AI suggestions for learning and practice paths.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div>© 2026 PrepEdge | MCA Final Year Project</div>
     <div class="footer-links">
-        <a href="contact.html" class="footer-btn">Contact Us</a>
-        <a href="feedback.html" class="footer-btn">Feedback</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="feedback.html">Feedback</a>
     </div>
-</footer>
+  </footer>
 
+  <!-- Scripts -->
+  <script>
+    // Navbar scroll effect
+    window.addEventListener("scroll", () => {
+      const navbar = document.getElementById("navbar");
+      window.scrollY > 50 ? navbar.classList.add("scrolled") : navbar.classList.remove("scrolled");
+    });
+
+    // Scroll reveal for content domain
+    const contentSection = document.getElementById("contentDomain");
+    const revealContent = () => {
+      const triggerBottom = window.innerHeight / 5 * 4;
+      if(contentSection.getBoundingClientRect().top < triggerBottom) contentSection.classList.add("show");
+    };
+    window.addEventListener("scroll", revealContent);
+    window.addEventListener("load", revealContent);
+
+    // Staggered scroll reveal for grid cards
+    const cards = document.querySelectorAll(".card");
+    const revealCards = () => {
+      const triggerBottom = window.innerHeight / 5 * 4;
+      cards.forEach((card, i) => {
+        if(card.getBoundingClientRect().top < triggerBottom) {
+          setTimeout(() => { card.classList.add("show-card"); }, i * 150);
+        }
+      });
+    };
+    window.addEventListener("scroll", revealCards);
+    window.addEventListener("load", revealCards);
+  </script>
 </body>
 </html>
