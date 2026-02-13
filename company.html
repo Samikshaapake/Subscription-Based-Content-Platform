@@ -1,275 +1,311 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Companies & Blogs | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Companies & Blogs | PrepEdge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<style>
-* { box-sizing: border-box; }
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: white;
-    overflow-x: hidden;
-}
+      body {
+        font-family: "Segoe UI", Arial;
+        color: white;
+        overflow-x: hidden;
+        background: linear-gradient(270deg, #020617, #0f172a, #020617);
+        background-size: 600% 600%;
+        animation: bgMove 15s ease infinite;
+      }
 
-/* HEADER */
-header {
-    text-align: center;
-    padding: 50px 20px;
-    background: rgba(15,23,42,0.7);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
-    animation: fadeDown 1s ease;
-}
+      @keyframes bgMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
 
-@keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-40px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+      /* FLOAT HEADER */
+      header {
+        text-align: center;
+        padding: 60px 20px;
+        backdrop-filter: blur(12px);
+        animation: floatHeader 4s ease-in-out infinite;
+      }
 
-.container {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: auto;
-}
+      @keyframes floatHeader {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
 
-h2 {
-    margin-bottom: 20px;
-    text-align: center;
-}
+      .container {
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: auto;
+      }
 
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 28px;
-}
+      /* TABS */
+      .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+        position: relative;
+      }
 
-/* CARDS */
-.card-link {
-    text-decoration: none;
-    color: white;
-}
+      .tab {
+        padding: 12px 25px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
 
-.card {
-    background: linear-gradient(145deg, #111827, #0b1220);
-    border-radius: 16px;
-    padding: 25px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(40px);
-    animation: fadeUp 0.8s forwards;
-}
+      .tab.active {
+        color: #3b82f6;
+      }
 
-.card:nth-child(1){animation-delay:.1s}
-.card:nth-child(2){animation-delay:.2s}
-.card:nth-child(3){animation-delay:.3s}
-.card:nth-child(4){animation-delay:.4s}
+      .tab-slider {
+        position: absolute;
+        bottom: 0;
+        height: 3px;
+        width: 120px;
+        background: #3b82f6;
+        border-radius: 10px;
+        transition: 0.4s;
+      }
 
-@keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-}
+      /* GRID */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 28px;
+      }
 
-/* Glow border */
-.card::before {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: 16px;
-    background: linear-gradient(45deg,#3b82f6,#9333ea,#3b82f6);
-    z-index: -1;
-    opacity: 0;
-    transition: 0.4s;
-}
+      /* CARDS */
+      .card {
+        background: rgba(17, 24, 39, 0.6);
+        padding: 25px;
+        border-radius: 18px;
+        text-align: center;
+        backdrop-filter: blur(20px);
+        position: relative;
+        transition: 0.3s;
+        transform-style: preserve-3d;
+      }
 
-.card:hover::before { opacity: 1; }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: 18px;
+        background: linear-gradient(45deg, #3b82f6, #9333ea, #3b82f6);
+        z-index: -1;
+        opacity: 0;
+        transition: 0.4s;
+      }
 
-.card:hover {
-    transform: translateY(-10px) scale(1.04);
-}
+      .card:hover::before {
+        opacity: 1;
+      }
 
-/* IMAGE */
-.card img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 14px;
-    transition: transform 0.4s ease;
-}
+      .card:hover {
+        transform: rotateX(8deg) rotateY(8deg) scale(1.05);
+      }
 
-.card:hover img {
-    transform: scale(1.2) rotate(5deg);
-}
+      .card img {
+        width: 100px;
+        transition: 0.5s;
+      }
 
-/* Shine Effect */
-.card::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: rgba(255,255,255,0.1);
-    transform: skewX(-25deg);
-    transition: 0.6s;
-}
+      .card:hover img {
+        transform: scale(1.2) rotate(10deg);
+      }
 
-.card:hover::after { left: 150%; }
+      .card h3 {
+        margin-top: 10px;
+      }
 
-/* TABS */
-.tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
+      /* FADE ANIMATION */
+      .section {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 0.8s;
+      }
 
-.tab {
-    margin: 0 10px;
-    padding: 10px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    background: rgba(15,23,42,0.7);
-    transition: 0.3s;
-}
+      .section.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-.tab:hover {
-    transform: translateY(-3px);
-}
+      /* PARTICLES */
+      .particle {
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: #3b82f6;
+        border-radius: 50%;
+        opacity: 0.5;
+        animation: floatParticle 10s linear infinite;
+      }
 
-.tab.active {
-    background: #3b82f6;
-}
+      @keyframes floatParticle {
+        from {
+          transform: translateY(100vh);
+        }
+        to {
+          transform: translateY(-10vh);
+        }
+      }
 
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background: #020617;
-    opacity: 0.7;
-}
-</style>
+      footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+        opacity: 0.7;
+      }
+    </style>
 
-<script>
-function showSection(sectionId, tabElement) {
-    document.querySelectorAll('.section').forEach(sec => {
-        sec.style.opacity = 0;
-        setTimeout(()=> sec.style.display = 'none',200);
-    });
+    <script>
+      function showSection(id, tab) {
+        document.querySelectorAll(".section").forEach((s) => {
+          s.classList.remove("show");
+          s.style.display = "none";
+        });
 
-    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        document
+          .querySelectorAll(".tab")
+          .forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
 
-    setTimeout(() => {
-        const section = document.getElementById(sectionId);
-        section.style.display = 'grid';
-        section.style.opacity = 1;
-    },200);
+        let section = document.getElementById(id);
+        section.style.display = "grid";
 
-    tabElement.classList.add('active');
-}
+        setTimeout(() => section.classList.add("show"), 50);
 
-window.onload = function() {
-    showSection('companies', document.querySelector('.tab'));
-};
-</script>
+        moveSlider(tab);
+      }
 
-</head>
-<body>
+      function moveSlider(tab) {
+        const slider = document.querySelector(".tab-slider");
+        slider.style.width = tab.offsetWidth + "px";
+        slider.style.left = tab.offsetLeft + "px";
+      }
 
-<header>
-    <h1>Companies & Blogs</h1>
-    <p>Explore company insights and read informative blogs</p>
-</header>
+      window.onload = () => {
+        showSection("companies", document.querySelector(".tab"));
+        createParticles();
+      };
 
-<div class="container">
+      /* PARTICLE GENERATOR */
+      function createParticles() {
+        for (let i = 0; i < 40; i++) {
+          let p = document.createElement("div");
+          p.className = "particle";
+          p.style.left = Math.random() * 100 + "vw";
+          p.style.animationDuration = 5 + Math.random() * 10 + "s";
+          document.body.appendChild(p);
+        }
+      }
+    </script>
+  </head>
 
-    <!-- Tabs -->
-    <div class="tabs">
-        <div class="tab active" onclick="showSection('companies', this)">Companies</div>
+  <body>
+    <header>
+      <h1>Companies & Blogs</h1>
+      <p>Explore company insights and read informative blogs</p>
+    </header>
+
+    <div class="container">
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab active" onclick="showSection('companies', this)">
+          Companies
+        </div>
         <div class="tab" onclick="showSection('blogs', this)">Blogs</div>
+      </div>
+
+      <!-- Companies -->
+      <div id="companies" class="grid section">
+        <a href="#" class="card-link">
+          <div class="card">
+            <img src="image/google.webp" />
+            <h3>Google</h3>
+            <p>Tech giant known for search, cloud, and AI.</p>
+          </div>
+        </a>
+
+        <a href="#" class="card-link">
+          <div class="card">
+            <img src="image/amazon.png" />
+            <h3>Amazon</h3>
+            <p>Global e-commerce leader.</p>
+          </div>
+        </a>
+
+        <a href="#" class="card-link">
+          <div class="card">
+            <img src="image/microsoft.avif" />
+            <h3>Microsoft</h3>
+            <p>Software & cloud giant.</p>
+          </div>
+        </a>
+
+        <a href="#" class="card-link">
+          <div class="card">
+            <img src="Image/Meta-logo.png" />
+            <h3>Meta</h3>
+            <p>Social media innovator.</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Blogs -->
+      <div id="blogs" class="grid section" style="display: none">
+        <a href="#" class="card-link">
+          <div class="card">
+            <img src="image/interview-tips.jpg" />
+            <h3>Interview Tips</h3>
+            <p>Crack coding & HR rounds.</p>
+          </div>
+        </a>
+
+        <a href="#" class="card-link">
+          <div class="card">
+            <img src="image/resume.jpg" />
+            <h3>Resume Guide</h3>
+            <p>Create a strong resume.</p>
+          </div>
+        </a>
+
+        <a href="#" class="card-link">
+          <div class="card">
+            <img src="image/tech-trends.jpg" />
+            <h3>Tech Trends</h3>
+            <p>Latest industry updates.</p>
+          </div>
+        </a>
+
+        <a href="#" class="card-link">
+          <div class="card">
+            <img src="image/Story.jpg" />
+            <h3>Experiences</h3>
+            <p>Real candidate stories.</p>
+          </div>
+        </a>
+      </div>
     </div>
 
-    <!-- Companies -->
-    <div id="companies" class="grid section">
-        <a href="#" class="card-link">
-            <div class="card">
-                <img src="image/google.webp">
-                <h3>Google</h3>
-                <p>Tech giant known for search, cloud, and AI.</p>
-            </div>
-        </a>
-
-        <a href="#" class="card-link">
-            <div class="card">
-                <img src="image/amazon.png">
-                <h3>Amazon</h3>
-                <p>Global e-commerce leader.</p>
-            </div>
-        </a>
-
-        <a href="#" class="card-link">
-            <div class="card">
-                <img src="image/microsoft.avif">
-                <h3>Microsoft</h3>
-                <p>Software & cloud giant.</p>
-            </div>
-        </a>
-
-        <a href="#" class="card-link">
-            <div class="card">
-                <img src="Image/Meta-logo.png">
-                <h3>Meta</h3>
-                <p>Social media innovator.</p>
-            </div>
-        </a>
-    </div>
-
-    <!-- Blogs -->
-    <div id="blogs" class="grid section" style="display:none;">
-        <a href="#" class="card-link">
-            <div class="card">
-                <img src="image/interview-tips.jpg">
-                <h3>Interview Tips</h3>
-                <p>Crack coding & HR rounds.</p>
-            </div>
-        </a>
-
-        <a href="#" class="card-link">
-            <div class="card">
-                <img src="image/resume.jpg">
-                <h3>Resume Guide</h3>
-                <p>Create a strong resume.</p>
-            </div>
-        </a>
-
-        <a href="#" class="card-link">
-            <div class="card">
-                <img src="image/tech-trends.jpg">
-                <h3>Tech Trends</h3>
-                <p>Latest industry updates.</p>
-            </div>
-        </a>
-
-        <a href="#" class="card-link">
-            <div class="card">
-                <img src="image/Story.jpg">
-                <h3>Experiences</h3>
-                <p>Real candidate stories.</p>
-            </div>
-        </a>
-    </div>
-
-</div>
-
-<footer>
-© PrepEdge - Interview Preparation Platform
-</footer>
-
-</body>
+    <footer>© PrepEdge - Interview Preparation Platform</footer>
+  </body>
 </html>
